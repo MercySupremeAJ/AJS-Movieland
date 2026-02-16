@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJS Movie Land</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="app" id="app">
+
+        <!-- ========== SCREEN 1: LOGIN / SIGNUP ========== -->
+        <section id="auth-screen" class="screen">
+            <div class="auth-container">
+                <div class="auth-brand">
+                    <span class="brand-icon">🍿</span>
+                    <h1 class="auth-title">AJS Movie Land</h1>
+                    <p class="auth-subtitle">Grab your favorite snack, dim the lights &amp; dive in!</p>
+                </div>
+
+                <div class="auth-tabs">
+                    <button class="auth-tab active" id="login-tab">Login</button>
+                    <button class="auth-tab" id="signup-tab">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="password-field">
+                            <input type="password" id="login-password" placeholder="••••••" required minlength="6">
+                            <button type="button" class="password-toggle" id="login-password-toggle"
+                                aria-label="Show password">👁</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get In →</button>
+                    <p class="error-message" id="login-error"></p>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signup-form" class="auth-form hidden">
+                    <div class="form-group">
+                        <label for="signup-name">Your Name</label>
+                        <input type="text" id="signup-name" placeholder="Movie Lover" required minlength="2">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Min 6 characters" required
+                            minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Join the Club 🎬</button>
+                    <p class="error-message" id="signup-error"></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- ========== SCREEN 2: DASHBOARD ========== -->
+        <section id="dashboard-screen" class="screen hidden">
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1 class="logo">🍿 AJS Movie Land</h1>
+                </div>
+                <div class="header-center">
+                    <span class="user-greeting" id="user-greeting">Hey there, Cinephile!</span>
+                </div>
+                <div class="header-right">
+                    <div class="user-stats" id="user-stats"></div>
+                    <button class="btn btn-small btn-danger" id="logout-btn">✌️ Peace Out</button>
+                </div>
+            </header>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔎</span>
+                    <input type="text" id="search-input" class="search-input"
+                        placeholder="What are we watching tonight?">
+                </div>
+                <button class="btn btn-primary" id="search-btn">Find Movies</button>
+            </div>
+
+            <!-- Search Results -->
+            <div id="search-results" class="search-results hidden">
+                <div class="section-header">
+                    <h2>🎞️ Results</h2>
+                    <button class="btn btn-small btn-secondary" id="close-search-btn">✕ Clear</button>
+                </div>
+                <div id="search-results-grid" class="movie-grid"></div>
+                <p id="search-message" class="info-message"></p>
+            </div>
+
+            <!-- Trending Movies (auto-loaded on login) -->
+            <div id="trending-section" class="trending-section">
+                <div class="section-header">
+                    <h2>🔥 Trending Now</h2>
+                </div>
+                <div id="trending-grid" class="movie-grid"></div>
+                <p id="trending-message" class="info-message">Loading trending movies...</p>
+            </div>
+
+            <!-- Genre Filter -->
+            <div class="filter-bar">
+                <span class="filter-label">Browse:</span>
+                <button class="filter-btn active" data-filter="all">🎥 All</button>
+                <button class="filter-btn" data-filter="Action">💥 Action</button>
+                <button class="filter-btn" data-filter="Comedy">🤣 Comedy</button>
+                <button class="filter-btn" data-filter="Drama">🎭 Drama</button>
+                <button class="filter-btn" data-filter="Horror">🧟 Horror</button>
+                <button class="filter-btn" data-filter="Other">🌀 Other</button>
+            </div>
+
+            <!-- My Collection -->
+            <div class="collection-container">
+                <div class="collection-header">
+                    <h2 class="section-title">🎬 My Vault <span id="collection-count">(0 films)</span></h2>
+                </div>
+                <div id="collection-grid" class="movie-grid"></div>
+                <p id="empty-collection" class="info-message">Nothing here yet — go discover something amazing! 🚀</p>
+            </div>
+        </section>
+
+        <!-- ========== MODAL: MOVIE DETAIL ========== -->
+        <div id="movie-modal" class="modal hidden">
+            <div class="modal-overlay" id="modal-overlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" id="modal-close-btn">✕</button>
+                <div id="modal-body"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts: load classes first, then app last -->
+    <script src="./javascript/Review.js"></script>
+    <script src="./javascript/Movie.js"></script>
+    <script src="./javascript/User.js"></script>
+    <script src="./javascript/api.js"></script>
+    <script src="./javascript/app.js"></script>
+</body>
+
+</html>
